@@ -10,7 +10,7 @@ CREATE TABLE user (
   password TEXT NOT NULL
 );
 
-CREATE TABLE university (
+CREATE TABLE university_list (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT UNIQUE NOT NULL,
   url TEXT NOT NULL
@@ -25,5 +25,5 @@ CREATE TABLE room_post (
   title TEXT NOT NULL,
   body TEXT NOT NULL,
   FOREIGN KEY (auser_id) REFERENCES user (id)
-  FOREIGN KEY (university_id) REFERENCES university (id)
+  FOREIGN KEY (university_id) REFERENCES university_list (id)
 );
