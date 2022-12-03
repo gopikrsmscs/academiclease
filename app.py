@@ -44,8 +44,10 @@ class posts(db.Model):
     created = db.Column(db.Date, default=datetime.utcnow)
     status = db.Column(db.String(100))
 
-db.create_all()
-
+with app.app_context():
+     print("all tables created")
+     db.create_all()
+     
 @app.route("/")
 def index():
     if not session.get("uname"):
