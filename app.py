@@ -10,7 +10,7 @@ Session(app)
 
 
 PASSWORD ="root"
-PUBLIC_IP_ADDRESS ="10.75.224.4"
+PUBLIC_IP_ADDRESS ="34.123.205.220"
 DBNAME ="academiclease"
 PROJECT_ID ="fit-discipline-369622"
 INSTANCE_NAME ="academiclease"
