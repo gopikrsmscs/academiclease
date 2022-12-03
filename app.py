@@ -16,7 +16,8 @@ PROJECT_ID ="fit-discipline-369622"
 INSTANCE_NAME ="academiclease"
  
 app.config["SECRET_KEY"] = "yoursecretkey"
-app.config["SQLALCHEMY_DATABASE_URI"]= f"mysql+mysqldb://root:{PASSWORD}@{PUBLIC_IP_ADDRESS}/{DBNAME}"
+app.config["SQLALCHEMY_DATABASE_URI"]= f"mysql + mysqldb://root:{PASSWORD}@/{DBNAME}?unix_socket =/cloudsql/{INSTANCE_NAME}"
+
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]= True
 
 db = SQLAlchemy(app)
