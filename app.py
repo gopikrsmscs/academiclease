@@ -44,7 +44,7 @@ class posts(db.Model):
     created = db.Column(db.Date, default=datetime.utcnow)
     status = db.Column(db.String(100))
 
-
+db.create_all()
 
 @app.route("/")
 def index():
@@ -76,7 +76,4 @@ def logout():
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)
 
-
-with app.app_context():
-    print("all tables created")
-    db.create_all()
+    
