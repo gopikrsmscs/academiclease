@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block y %}
+   <div class="container">
+       <div class="row">
+        <h1 class="text-center"> Login to Academic Lease </h1>
+            <form action="/login" method="POST">
+                <label for="uname"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="uname" required>
+        
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="psw" required>
+                
+                <button type="button submit" class="btn btn-primary">Login</button>
+                <button type="button" onClick="location.href='/signup'" class="btn btn-primary">Signup</button>
+            </form>
+            
+       </div>
+      
+   </div>
+{% endblock %}
