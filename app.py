@@ -16,7 +16,7 @@ PROJECT_ID ="fit-discipline-369622"
 INSTANCE_NAME ="academiclease"
  
 app.config["SECRET_KEY"] = "yoursecretkey"
-app.config["SQLALCHEMY_DATABASE_URI"]= f"mysql+mysqldb://root:{PASSWORD}@{PUBLIC_IP_ADDRESS}/{DBNAME}?unix_socket =/cloudsql/{PROJECT_ID}:{INSTANCE_NAME}"
+app.config["SQLALCHEMY_DATABASE_URI"]= f"mysql+mysqldb://root:{PASSWORD}@{PUBLIC_IP_ADDRESS}/{DBNAME}?unix_sock =/cloudsql/{PROJECT_ID}:{INSTANCE_NAME}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]= True
 
 db = SQLAlchemy(app)
@@ -47,7 +47,7 @@ class posts(db.Model):
 with app.app_context():
      print("all tables created")
      db.create_all()
-     
+
 @app.route("/")
 def index():
     if not session.get("uname"):
