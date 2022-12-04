@@ -1,5 +1,7 @@
+import email
 from flask import Flask, render_template, redirect, request, session
 from flask_session import Session
+import database
 
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
@@ -26,6 +28,27 @@ def login():
 
 @app.route("/signup", methods=["POST", "GET"])
 def signup():
+    if request.method == "POST":
+        username = request.form.get("uname")
+        password = request.form.get("password")
+        retype_paassword = request.form.get("rpassword")
+        email = request.form.get("email")
+        query="insert into user values('"+str(username)+"','"+str(email)+"','"+str(password)+")"
+        database_connection = database().get_connection()
+        mycursor = database_connection.cursor()
+        try:
+            mycursor.execute(query)
+            database_connection.commit()
+        except:
+            print("failed")
+            print(query)
+            database_connection.rollback()
+            database_connection.commit()
+        database_connection.close()
+        session["uname"] = request.form.get("uname") 
+        session["email"] = request.form.get("uname") 
+        session["id"] = request.form.get("uname")        
+        return redirect("/")
     return render_template("signup.html")
 
 

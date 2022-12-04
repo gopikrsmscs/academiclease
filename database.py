@@ -1,5 +1,6 @@
 import mysql.connector
 import pandas as pd
+from datetime import date
 
 class database:
     def get_connection(self):
@@ -13,10 +14,18 @@ class database:
 
     def init_db(self):
         database_connection = self.get_connection()
-        with open('schemas.sql', 'r') as f:
-             with database_connection.cursor() as cursor:
-                cursor.execute(f.read(), multi=True)
-        database_connection.commit()
+        cursor = database_connection.cursor()
+        try:
+            with open('schemas.sql', 'r') as f:
+                x = f.read()
+                print(x)
+                cursor.execute(x,multi=True)
+                database_connection.commit()
+        except:
+            print("failed")
+            print(x)
+            database_connection.rollback()
+            database_connection.commit()
         database_connection.close()
         self.load_university()
     
@@ -25,9 +34,11 @@ class database:
         arr = df.to_numpy()
         database_connection = self.get_connection()
         mycursor = database_connection.cursor()
+        count=1
         for a in arr:
             a[0] =str(a[0]).replace("'"," ")
-            query="insert into us_university_list values('"+str(a[0])+"','"+str(a[1])+"');"
+            query="insert into university_list values("+str(count)+",'"+str(a[0])+"','"+str(a[1])+"','"+str(date.today())+"');"
+            count = count+1
             try:
                 mycursor.execute(query)
                 database_connection.commit()
@@ -37,3 +48,8 @@ class database:
                 database_connection.rollback()
                 database_connection.commit()
         database_connection.close()
+
+
+if __name__ == '__main__':
+    obj = database()
+    obj.init_db() 
