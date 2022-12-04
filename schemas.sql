@@ -7,7 +7,8 @@ DROP TABLE IF EXISTS room_post;
 CREATE TABLE user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   username TEXT UNIQUE NOT NULL,
-  password TEXT NOT NULL
+  password TEXT NOT NULL,
+  created date NOT NULL
 );
 
 CREATE TABLE university_list (
@@ -24,6 +25,7 @@ CREATE TABLE room_post (
   created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   title TEXT NOT NULL,
   body TEXT NOT NULL,
+  status VARCHAR(50) NOT NULL,
   FOREIGN KEY (auser_id) REFERENCES user (id)
   FOREIGN KEY (university_id) REFERENCES university_list (id)
 );
