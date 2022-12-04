@@ -1,53 +1,11 @@
 from flask import Flask, render_template, redirect, request, session
 from flask_session import Session
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
 
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 Session(app)
-
-
-PASSWORD ="root"
-PUBLIC_IP_ADDRESS ="34.123.205.220"
-DBNAME ="academiclease"
-PROJECT_ID ="fit-discipline-369622"
-INSTANCE_NAME ="academiclease"
- 
-app.config["SECRET_KEY"] = "yoursecretkey"
-app.config["SQLALCHEMY_DATABASE_URI"]= f"mysql+mysqldb://root:{PASSWORD}@/{DBNAME}?unix_socket =/cloudsql/{INSTANCE_NAME}"
-
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]= True
-
-db = SQLAlchemy(app)
-class User(db.Model):
-    __tablename__ = "user"
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
-    email = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(100))
-    created = db.Column(db.Date, default=datetime.utcnow)
-
-class University(db.Model):
-    __tablename__ = "university_list"
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200),unique=True)
-    url = db.Column(db.String(200))
-
-class posts(db.Model):
-    __tablename__ = "posts"
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer,db.ForeignKey("user.id"))
-    university_id = db.Column(db.Integer, db.ForeignKey("university_list.id"))
-    title = db.Column(db.Text)
-    body = db.Column(db.Text)
-    created = db.Column(db.Date, default=datetime.utcnow)
-    status = db.Column(db.String(100))
-
-with app.app_context():
-     print("all tables created")
-     db.create_all()
 
 @app.route("/")
 def index():
@@ -77,6 +35,6 @@ def logout():
     return redirect("/")
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80)
+    app.run(debug=True,host='0.0.0.0', port=80)
 
     

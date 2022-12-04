@@ -1,20 +1,34 @@
 {% extends "layout.html" %}
 {% block y %}
-   <div class="container">
-       <div class="row">
-        <h1 class="text-center"> Login to Academic Lease </h1>
-            <form action="/login" method="POST">
-                <label for="uname"><b>Username</b></label>
-                <input type="text" placeholder="Enter Username" name="uname" required>
-        
-                <label for="psw"><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" name="psw" required>
+<section class="" style="background-color: white">
+    <div class="container">
+      <div class="row ">
+        <div class="col-lg-12 col-xl-11">
+          <div class="card">
+            <div class="card-body ">
+              <div class="row ">
+                <p class="text-center display-1 mt-4">Login Academic Lease</p>
+                <div class="col-md-10 col-lg-6 col-xl-5 order-2">
+                  <form action="/login" class="form-group" method="POST">
+                    <label for="uname"><b>Email</b></label>
+                    <input class="form-control" type="text" placeholder="Enter Username" name="uname" required>
+                    <label for="psw"><b>Password</b></label>
+                    <input class="form-control" type="password" placeholder="Enter Username" name="uname" required>
+                    <button type="button" onClick="location.href='/'" class="btn btn-primary">Login</button>
+                    <p class="text-center mt-4">Don't have a account signup instead?</p>
+                    <button type="button" onClick="location.href='/signup'" class="btn btn-primary">Signup</button>
+                </form>
                 
-                <button type="button submit" class="btn btn-primary">Login</button>
-                <button type="button" onClick="location.href='/signup'" class="btn btn-primary">Signup</button>
-            </form>
-            
-       </div>
-      
-   </div>
+                </div>
+                <div class="col-md-10 col-lg-6 col-xl-7  mt-4 align-items-center">
+                  <img src="/static/img/centinnalcourt.jpeg"
+                    class="img-thumbnail" alt="Sample image">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 {% endblock %}
