@@ -1,7 +1,6 @@
-import email
 from flask import Flask, render_template, redirect, request, session
 from flask_session import Session
-import database
+from database import database
 
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
@@ -33,7 +32,7 @@ def signup():
         password = request.form.get("password")
         retype_paassword = request.form.get("rpassword")
         email = request.form.get("email")
-        query="insert into user values('"+str(username)+"','"+str(email)+"','"+str(password)+")"
+        query="insert into user(name,email,password) values('"+str(username)+"','"+str(email)+"','"+str(password)+"')"
         database_connection = database().get_connection()
         mycursor = database_connection.cursor()
         try:
@@ -61,3 +60,5 @@ if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0', port=8000)
 
     
+
+
