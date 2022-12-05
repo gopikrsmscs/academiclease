@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+ 
+{% block y %}
+ 
+   <div class="container">
+        <h1>{% block title %}Search in Academic Lease by University {% endblock %}</h1>
+        <br><br>
+        <form action="/searchpost" method="POST">
+            <select class="form-control" name="university">
+                {% for univ in university_list %}
+                    {% if select %}
+                        <option value="{{ univ[1] }}" selected>{{univ[1] }}</option>
+                    {% else %}
+                        <option value="{{ univ[1] }}" >{{univ[1] }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <br>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+        <br>
+        <br>
+        {% for post in posts %}
+        <div class="card">
+           <h5 class="card-header">Post: {{post[0]}}</h5>
+           <div class="card-body">
+             <img class="profile-pic mr-3" src="{{post[7]}}"></img>
+             <h5 class="card-title">Title: {{post[4]}}</h5>
+             <h5 class="card-title">Posted by: {{post[1]}}</h5>
+             <h5 class="card-title">University: {{post[2]}}</h5>
+             <p class="card-text">{{post[5]}}</p>
+             <a href="#" class="btn btn-success">{{post[6]}}</a>
+           </div>
+         </div>
+         <br>
+        {% endfor %}
+   </div>
+   
+{% endblock %}

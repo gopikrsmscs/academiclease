@@ -1,13 +1,9 @@
-import email
-import imp
 from flask import Flask, render_template, redirect, request, session,url_for,flash
 from flask_session import Session
 from database import database
-from werkzeug.exceptions import abort
 from google.cloud import storage
 from werkzeug.utils import secure_filename
 import os
-import datetime
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"]= 'fit-discipline-369622-3439a0abb372.json'
 app = Flask(__name__)
@@ -36,16 +32,45 @@ def index():
         database_connection.close() 
         return render_template('home.html',posts=posts)
 
+@app.route("/searchpost" ,methods=["POST", "GET"])
+def searchpost():
+    if not session.get("email"):
+        return redirect("/login")
+    else:
+        if request.method == "POST":
+            database_connection = database().get_connection()
+            mycursor = database_connection.cursor()
+            universriy =request.form.get('university')
+            queryuniv = "select * from university_list;"
+            query = "select * from room_post where university='{}';".format(universriy)
+            try:
+                mycursor.execute(query)
+                posts = mycursor.fetchall()
+                database_connection.commit()
+                mycursor.execute(queryuniv)
+                university_list = mycursor.fetchall()
+            except:
+                print("failed")
+                print(query)
+                database_connection.rollback()
+                database_connection.commit()
+            database_connection.close() 
+            return render_template('search.html',posts=posts,select=universriy,university_list=university_list)
+        else:
+            database_connection = database().get_connection()
+            mycursor = database_connection.cursor()
+            query = "select * from university_list;"
+            try:
+                mycursor.execute(query)
+                university_list = mycursor.fetchall()
+                database_connection.commit()
+            except:
+                print("failed")
+                database_connection.rollback()
+                database_connection.commit()
+            database_connection.close() 
+            return render_template('search.html',university_list=university_list)
 
-def get_post(post_id):
-    conn = database().get_connection()
-    post = conn.execute('SELECT * FROM posts WHERE id = ?',
-                        (post_id,)).fetchone()
-    conn.close()
-    if post is None:
-        abort(404)
-    return post
- 
  
 @app.route("/login", methods=["POST", "GET"])
 def login():
@@ -107,12 +132,6 @@ def signup():
         return redirect("/login")
     return render_template("signup.html")
 
-@app.route('/<int:post_id>')
-def post(post_id):
-    post = get_post(post_id)
-    return render_template('postid.html', post=post)
-
-
 @app.route('/createpost', methods=('GET', 'POST'))
 def create():
     if request.method == 'POST':
@@ -152,10 +171,10 @@ def create():
         database_connection.close()  
     return render_template('post.html',university_list=university_list)
 
+
+
 @app.route('/<int:id>/edit', methods=('GET', 'POST'))
 def edit(id):
-    post = get_post(id)
-
     if request.method == 'POST':
         title = request.form['title']
         content = request.form['content']
@@ -174,12 +193,12 @@ def edit(id):
 
 @app.route('/<int:id>/delete', methods=('POST',))
 def delete(id):
-    post = get_post(id)
+
     conn = database().get_connection()
     conn.execute('DELETE FROM posts WHERE id = ?', (id,))
     conn.commit()
     conn.close()
-    flash('"{}" was successfully deleted!'.format(post['title']))
+    flash('"{}" was successfully deleted!'.format(''))
     return redirect('/')
 
 
