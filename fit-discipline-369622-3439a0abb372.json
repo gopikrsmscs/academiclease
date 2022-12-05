@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "fit-discipline-369622",
+  "private_key_id": "3439a0abb3721a45bbc45e6f91718790d3a25347",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDO8V9klB9lZO75\nJbSUNUUtMNWM+MHyEWLFpHvD++kCTSo1eeZcHx2cUNPBoBb4ClzULA5u7wGUNDEY\n9kAf3joz+VTbfb1heJBnpk0HNSD/EJvLNPT2UkA5AzNG/Uu+/egmiKF1HDZYGGq1\nMFLUd9/U/84gk9ivFfk436Re+J1ad8dXZVzrIkf/v9XnsLMOZjiAlhmt45PWhcfO\nJL7GVEbn8zletn8pOhG+i+CXqlNfhdj/KMVHTGiuIq+jBfLvO8G+rqon66LtNewu\nnfFwsnio9rN1oazs5cre2owI2UHwcyYY3CgHPPElK/th7yT+AIrD2FZD4wVbW8PN\nJM+KPgXNAgMBAAECggEAJru54Z7x024VZo++oWDpHkC+L8Edt/u2E40qVy/u2G3u\nAQ1cZxCx36CnSd33fpyd7F6EoxHcJ0uvht8MeIqFNVYtIloCGNzSlnvjff5dOzB2\nII48bWBOwf0N23MsesaWbaP0KHHL4ChNzLULQ9ZeEEWC5MkXbQn9WD5PyzDYbuaX\nEy0UmMjhavk/LOA6SFh4N+0XbEYULaouPES7Mv9DEvU8DOhT6RTD+isO0EzS5pnA\nsyewylJx6k4WLLlLdzlWbt/vw3+YS/PM1jxeMp2o1E/O6Dls/15EiUwbi1gPb7Co\n23yDC+00w4V5Ni5cATiQke7r9N2bwWJi/dUhti6QwQKBgQD1gNdFNa7PrY1PNt8g\nLmfY2gt4+NRvH7usjIe+q//YqC5Y12K8JWGRVAQUVPlM4tfWZh+MhWbKNM56HWsd\nC2yXqqfkE1RnUbX24jZeJKcMJV+gs0MWjGwG9oBodn5/ZZ/laMvmafBxQt2wwNWm\nI2g/sCJSj+OFujaKoLb0EMvtrQKBgQDXynfZn7HYg2UEgzBRzR8+CAn6jgWmDMFd\nNMIWOFoVvEhWCIjzz4V1k1yQ/jxLzCDHEYfHEZK4E3aSWt0v7rUYOuY2whMG0O9g\nVCdJhcCzViH6efxj4EmZglkD6cQFh36VLSD47RGMdrosYA6mVoTDcaLLrrTILwQC\n9aSpHo08oQKBgHiWm6bMMpyiE9oICtsk0C+NEruOBdK7lJSxxm+azqXeHj3XNhFS\njzUyPnq6LmZcukX+jZqZYB8MhysmThnLJcDtu1/lOr0xPp8RCEF/4Wmu5eTqiJaH\nzPwykmo9Ye8zvLGToyv/d3I6tOgAIDFmDOvTmVhSgyCJkgbP4G3L3k9VAoGAOiy3\nStAmnfwuS50idasa9RottoJ7O1zM9Fe4y0y93IY56he69B/KFvx3RA+GKdkKLSCo\nvh4as81rdeFRKA7ue23FipWfk4LYRdvqC4QngzGBT4l7ZWGd9eiSHt/ynJr+oTDd\nZr5isL+BSV1MFcPVXutPvCGJUz55kmKu1XkLEoECgYEAnhlRm7pk4VWGOerQ67LY\nXrS5F/LIab8eMoIPAAm7tpYZ70/2z8jiXJj7iLiVJzYbdiXrOfykYlRt8KZ7xBCs\n43rYnTp6jDfLFgZWqXKXjFyCBPrn2q1dm/+Okt20pXeJMuVD6DYl6uq1TPwhAc9s\ngeqVxyQPl5+dgT7uqDsCYfI=\n-----END PRIVATE KEY-----\n",
+  "client_email": "googlecloudbucket@fit-discipline-369622.iam.gserviceaccount.com",
+  "client_id": "104018234012706671197",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/googlecloudbucket%40fit-discipline-369622.iam.gserviceaccount.com"
+}

@@ -10,12 +10,13 @@
               <div class="row ">
                 <p class="text-center display-1 mt-4">Sign Up Academic Lease</p>
                 <div class="col-md-10 col-lg-6 col-xl-5 order-2">
-                  <form action="/signup" class="form-group" method="POST">
+                  <form action="/signup" class="form-group" method="POST" enctype="multipart/form-data">
                     <label for="uname"><b>Name</b></label>
                     <input class="form-control" type="text" placeholder="Enter Name" name="uname" required>
                     <label for="uname"><b>Email</b></label>
                     <input class="form-control" type="text" placeholder="Enter Email" name="email" required>
-
+                    <label class="form-label"><b>Upload Image</b> </label>
+                    <input type="file" id="file" required class="form-control" name="share_files"/>
                     <label for="psw"><b>Password</b></label>
                     <input class="form-control" type="password" placeholder="Enter Password" name="password" required>
 

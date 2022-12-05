@@ -2,3 +2,4 @@ Flask
 Flask-Session
 mysql-connector
 pandas
+google-cloud-storage

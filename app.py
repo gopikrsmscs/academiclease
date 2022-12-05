@@ -1,9 +1,15 @@
 import email
+import imp
 from flask import Flask, render_template, redirect, request, session,url_for,flash
 from flask_session import Session
 from database import database
 from werkzeug.exceptions import abort
+from google.cloud import storage
+from werkzeug.utils import secure_filename
+import os
+import datetime
 
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"]= 'fit-discipline-369622-3439a0abb372.json'
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -59,7 +65,7 @@ def login():
             else:
                 session['name'] = output[1]
                 session['id'] = output[0]
-                print(output[0])
+                session['url'] = output[5]
                 database_connection.commit()
         except:
             print("failed")
@@ -75,9 +81,18 @@ def signup():
     if request.method == "POST":
         username = request.form.get("uname")
         password = request.form.get("password")
+        file = request.files["share_files"]
+        file.save(secure_filename(file.filename))
+        client = storage.Client("fit-discipline-369622")
+        bucket = client.get_bucket("academicleaseimages")
+        blob = bucket.blob(file.filename)
+        blob.upload_from_filename(file.filename)
+
         retype_paassword = request.form.get("rpassword")
+        os.remove(file.filename)
         email = request.form.get("email")
-        query="insert into user(name,email,password) values('"+str(username)+"','"+str(email)+"','"+str(password)+"')"
+        imageurl = "https://storage.googleapis.com/academicleaseimages/"+file.filename
+        query="insert into user(name,email,password,image_url) values('"+str(username)+"','"+str(email)+"','"+str(password)+"','"+str(imageurl)+"')"
         database_connection = database().get_connection()
         mycursor = database_connection.cursor()
         try:
@@ -89,7 +104,7 @@ def signup():
             database_connection.rollback()
             database_connection.commit()
         database_connection.close()       
-        return redirect("/login.html")
+        return redirect("/login")
     return render_template("signup.html")
 
 @app.route('/<int:post_id>')
@@ -105,13 +120,15 @@ def create():
         body = request.form.get('body')
         status = request.form.get('status')
         id = session["name"]
+        image = session["url"]
         univesity_id = request.form.get('university_id')
         if not title:
             flash('Title is required!')
         else:
             connection = database().get_connection()
             conn =connection.cursor()
-            query = "INSERT INTO room_post (user, university,title,body,status) VALUES ('{}','{}','{}','{}','{}')".format(id, univesity_id,title,body,status)
+            image = session["url"]
+            query = "INSERT INTO room_post (user, university,title,body,status,image_url) VALUES ('{}','{}','{}','{}','{}','{}')".format(id, univesity_id,title,body,status,image)
             print(query)
             conn.execute(query)
             connection.commit()
@@ -171,6 +188,7 @@ def logout():
     session["email"] = None
     session["name"] = None
     session["id"] = None
+    session['url'] = None
     return redirect("/")
 
 if __name__ == '__main__':
