@@ -2,16 +2,26 @@
  
 {% block y %}
  
-   <h1>{% block title %} Welcome to Academic Lease {{ session.name }} {% endblock %}</h1>
+   <div class="container">
+      <h1>{% block title %} Welcome to Academic Lease {{ session.name }} {% endblock %}</h1>
+
+      <button type="button submit"  onClick="location.href='/createpost'" class="btn btn-secondary ">+ Create Post</button>      
+      <button type="button submit" onClick="location.href='/searchpost'" class="btn btn-secondary">Search By Univ</button>
+      <br><br>
    {% for post in posts %}
-      <a href="{{ url_for('post', post_id=post['id']) }}">
-         <h2>{{ post['title'] }}</h2>
-      </a>
-      <span class="badge badge-primary">{{ post['created'] }}</span>
-      <a href="{{ url_for('edit', id=post['id']) }}">
-         <span class="badge badge-warning">Edit</span>
-      </a>
-      <hr>
+   <div class="card">
+      <h5 class="card-header">Post: {{post[0]}}</h5>
+      <div class="card-body">
+        <h5 class="card-title">Title: {{post[4]}}</h5>
+        <h5 class="card-title">Posted by: {{post[1]}}</h5>
+        <h5 class="card-title">University: {{post[2]}}</h5>
+        <p class="card-text">{{post[5]}}</p>
+        <a href="#" class="btn btn-success">{{post[6]}}</a>
+      </div>
+    </div>
+    <br>
    {% endfor %}
+   </div>
+   
  
 {% endblock %}

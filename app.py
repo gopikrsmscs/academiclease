@@ -14,7 +14,21 @@ Session(app)
 def index():
     if not session.get("email"):
         return redirect("/login")
-    return render_template('home.html')
+    else:
+        database_connection = database().get_connection()
+        mycursor = database_connection.cursor()
+        query = "select * from room_post;"
+        try:
+            mycursor.execute(query)
+            posts = mycursor.fetchall()
+            database_connection.commit()
+        except:
+            print("failed")
+            print(query)
+            database_connection.rollback()
+            database_connection.commit()
+        database_connection.close() 
+        return render_template('home.html',posts=posts)
 
 
 def get_post(post_id):
@@ -32,14 +46,21 @@ def login():
     if request.method == "POST":
         email = request.form.get("email")
         password = request.form.get("password")
-        print(email)
-        query="select count(*) from user where email='"+email+"' and password='"+password+"')"
+        query="select * from user where email='"+email+"' and password='"+password+"';"
         session['email'] = email
         database_connection = database().get_connection()
         mycursor = database_connection.cursor()
         try:
             mycursor.execute(query)
-            database_connection.commit()
+            output = mycursor.fetchone()
+            if output is None:
+                flash('Invalid email or password.')
+                return render_template("login.html")
+            else:
+                session['name'] = output[1]
+                session['id'] = output[0]
+                print(output[0])
+                database_connection.commit()
         except:
             print("failed")
             print(query)
@@ -77,23 +98,42 @@ def post(post_id):
     return render_template('postid.html', post=post)
 
 
-@app.route('/create', methods=('GET', 'POST'))
+@app.route('/createpost', methods=('GET', 'POST'))
 def create():
     if request.method == 'POST':
-        title = request.form['title']
-        content = request.form['content']
-
+        title = request.form.get('title')
+        body = request.form.get('body')
+        status = request.form.get('status')
+        id = session["name"]
+        univesity_id = request.form.get('university_id')
         if not title:
             flash('Title is required!')
         else:
-            conn = database().get_connection()
-            conn.execute('INSERT INTO posts (title, content) VALUES (?, ?)',
-                         (title, content))
-            conn.commit()
-            conn.close()
-            return redirect('/')
-
-    return render_template('post.html')
+            connection = database().get_connection()
+            conn =connection.cursor()
+            query = "INSERT INTO room_post (user, university,title,body,status) VALUES ('{}','{}','{}','{}','{}')".format(id, univesity_id,title,body,status)
+            print(query)
+            conn.execute(query)
+            connection.commit()
+            connection.close()
+            return redirect("/")
+    else:
+        university_list = []
+        database_connection = database().get_connection()
+        mycursor = database_connection.cursor()
+        query = "select * from university_list;"
+        try:
+            mycursor.execute(query)
+            university_list = mycursor.fetchall()
+            print(university_list[0])
+            database_connection.commit()
+        except:
+            print("failed")
+            print(query)
+            database_connection.rollback()
+            database_connection.commit()
+        database_connection.close()  
+    return render_template('post.html',university_list=university_list)
 
 @app.route('/<int:id>/edit', methods=('GET', 'POST'))
 def edit(id):
@@ -130,6 +170,7 @@ def delete(id):
 def logout():
     session["email"] = None
     session["name"] = None
+    session["id"] = None
     return redirect("/")
 
 if __name__ == '__main__':
